@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: pula-watch
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/pulawatch}
+    username: ${DB_USER:pulawatch}
+    password: ${DB_PASSWORD:pulawatch}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
+pulawatch:
+  scheduler:
+    enabled: true
+    tick: PT5S
+  checks:
+    batch-size: 50
+    request-timeout: PT10S
+    failure-threshold: 3
+    allow-private-targets: ${ALLOW_PRIVATE_TARGETS:false}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
